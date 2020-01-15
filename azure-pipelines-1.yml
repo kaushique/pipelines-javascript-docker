@@ -11,7 +11,7 @@ pool:
 
 variables:
     ContainerRegistry: MyDockerRegistry
-	  ContainerRepository: kaushikr93/devops-experiments
+    ContainerRepository: kaushikr93/devops-experiments
     
 steps:
       
