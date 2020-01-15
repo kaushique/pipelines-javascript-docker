@@ -17,4 +17,4 @@ steps:
         repository: 'kaushikr93/devops-experiments'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
+        tags: '$(Build.BuildId)'
