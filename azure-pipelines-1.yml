@@ -1,0 +1,49 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+    ContainerRegistry: MyDockerRegistry
+	  ContainerRepository: kaushikr93/devops-experiments
+    
+steps:
+      
+- task: Docker@1
+  displayName: Container registry login
+  inputs:
+    command: login
+    repository: $(ContainerRepository)
+    ContainerRegistry: $(ContainerRegistry)
+
+- task: Docker@1
+  displayName: Build image
+  inputs:
+    command: build an image
+    repository: $(ContainerRepository)
+    ContainerRegistry: $(ContainerRegistry)
+    dockerFile: Dockerfile
+    imageName: $(Build.Repository.Name)
+
+- task: Docker@1
+  displayName: Tag image
+  inputs:
+    command: tag image
+    repository: $(ContainerRepository)
+    ContainerRegistry: $(ContainerRegistry)
+    imageName: $(ContainerRegistry)/$(Build.Repository.Name):latest
+    arguments: $(ContainerRegistry)/$(Build.Repository.Name):$(Build.BuildId)
+
+- task: Docker@1
+  displayName: Push image
+  inputs:
+    command: push an image
+    repository: $(repository)
+    ContainerRegistry: $(ContainerRegistry)
+    imageName: $(Build.Repository.Name):$(Build.BuildId)
